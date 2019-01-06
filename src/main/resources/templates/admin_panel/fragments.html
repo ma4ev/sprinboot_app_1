@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+</head>
+<body>
+    <th:block th:fragment="users_table">
+        Users list
+        <div th:if="${!isEmpty}">
+            <div id="users_table">
+                <table>
+                    <thead>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.username}"></td>
+                        <td th:each="role, iterStat : ${user.roles}" th:text="!${iterStat.last} ? ${role} + ',': ${role}"></td>
+                        <td><a th:href="@{'/users/' + ${user.id}}">edit</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div th:if="${isEmpty}"> is empty</div>
+    </th:block>
+</body>

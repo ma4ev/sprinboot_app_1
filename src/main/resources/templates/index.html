@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <a href="/users">User list</a>
+</div>
+<div>
+    <th:block th:include="fragments :: messages_table"/>
+</div>
+<div>
+    <th:block th:include="fragments :: add_message"/>
+</div>
+</body>
+</html>
