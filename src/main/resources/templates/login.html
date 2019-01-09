@@ -4,16 +4,32 @@
     <title>Login page</title>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<th:block th:include="common :: navbar"></th:block>
+<div class="container mt-5 ml-1">
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${isRegistration == null}" class="mb-1">
+        <h4><a th:href="@{/registration}">Register now</a></h4>
+    </div>
+    <div>
+        <form th:action="@{(${isRegistration})? '/registration' : '/login'}" method="post" autocomplete="off">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">User Name : </label>
+                <div class="col-sm-6">
+                    <input type="text" name="username" class="form-control" placeholder="User name"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label"> Password: </label>
+                <div class="col-sm-6">
+                    <input type="password" name="password" class="form-control" placeholder="Password"/>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit" th:text="(${isRegistration})? 'Sign Up' : 'Sign In'"></button>
+        </form>
+    </div>
 </div>
 
-Login page
-<form th:action="@{/login}" method="post" autocomplete="off">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
-<a th:href="@{/registration}">Add new user</a>
 </body>
 </html>

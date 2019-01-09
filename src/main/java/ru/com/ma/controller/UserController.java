@@ -47,7 +47,7 @@ public class UserController {
         return BASE_PATH + "/userEdit";
     }
 
-    @DeleteMapping
+    @GetMapping("delete/{user}")
     public String deleteUser(@ModelAttribute User user){
         userService.delete(user);
         return "redirect:/users";

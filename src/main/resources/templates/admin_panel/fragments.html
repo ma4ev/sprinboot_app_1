@@ -4,6 +4,7 @@
 <head>
 </head>
 <body>
+<th:block th:include="common :: navbar"></th:block>
     <th:block th:fragment="users_table">
         Users list
         <div th:if="${!isEmpty}">
@@ -19,6 +20,7 @@
                         <td th:text="${user.username}"></td>
                         <td th:each="role, iterStat : ${user.roles}" th:text="!${iterStat.last} ? ${role} + ',': ${role}"></td>
                         <td><a th:href="@{'/users/' + ${user.id}}">edit</a></td>
+                        <td><a th:href="@{'/users/delete/' + ${user.id}}">delete</a></td>
                     </tr>
                     </tbody>
                 </table>

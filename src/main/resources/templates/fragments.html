@@ -4,58 +4,72 @@
 <head>
 </head>
 <body>
-    <th:block th:fragment="messages_table">
-        <th:block th:include="fragments :: logout" />
-        List of message
-        <div th:if="${!isEmpty}">
-            <th:block th:include="fragments :: filter" />
+<th:block th:fragment="messages_table">
+    <div th:if="${!isEmpty}" class="col-sm-3">
+            <th:block th:include="fragments :: filter"/>
             <div id="messages_table">
-                <table>
-                    <thead>
-                        <th>ID</th>
-                        <th>Text</th>
-                        <th>Tag</th>
-                        <th>Author</th>
-                    </thead>
-                    <tbody>
-                        <tr th:each="item : ${messages}">
-                            <td th:text="${item.id}"></td>
-                            <td th:text="${item.text}"></td>
-                            <td th:text="${item.tag}"></td>
-                            <td th:text="${item.author} !=null ? ${item.author.username} : 'none'"></td>
-                            <td th:if="${item.filename} !=null"><img th:src="@{'/img/' + ${item.filename}}"/></td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <div th:each="item : ${messages}" class="card my-3">
+                        <div class="card-img-top">
+                            <span th:if="${item.filename} !=null"><img th:src="@{'/img/' + ${item.filename}}"></span>
+                        </div>
+                        <div class="m-2">
+                            <span th:text="${item.text}">></span>
+                            <i th:text="${item.tag}">></i>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <strong th:text="${item.author} !=null ? ${item.author.username} : 'none'"></strong>
+                        </div>
+                    </div>
             </div>
         </div>
-        <div th:if="${isEmpty}"> is empty</div>
-    </th:block>
+        <div th:if="${isEmpty}">Message list is empty</div>
+</th:block>
+</div>
 
 <th:block th:fragment="add_message">
-    <form method="post" autocomplete="off" th:object="${new_message}" th:action="@{main}" enctype="multipart/form-data">
-        <label for="text" >Message: </label>
-        <input type="text" th:field="*{text}" placeholder="add your message"/>
-
-        <label for="tag">Tag: </label>
-        <input type="text"  th:field="*{tag}" placeholder="add your tag"/>
-
-        <input type="file" name="file">
-        <input type="submit" value="Add"/>
-    </form>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseAddForm" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Add new message
+    </a>
+    <div class="collapse" id="collapseAddForm">
+        <div class="form-group mt-3 col-sm-8">
+            <form method="post" autocomplete="off" th:object="${new_message}" th:action="@{main}"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="text" th:field="*{text}" class="form-control" placeholder="add your message"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" th:field="*{tag}" class="form-control" placeholder="add your tag"/>
+                </div>
+                <div class="form-group">
+                    <div class="custom-file">
+                        <input type="file" name="file" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </th:block>
 
 <th:block th:fragment="filter">
-    <form method="get" autocomplete="off" th:object="${filter}" th:action="@{/main}">
-        <label for="term"></label>
-        <input type="text" th:field="*{term}" placeholder="add your keyword for filtering">
-        <input type="submit" value="Search">
-    </form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <form method="get" autocomplete="off" th:object="${filter}" th:action="@{/main}" class="form-inline">
+                <label for="term"></label>
+                <input type="text" th:field="*{term}" class="form-control" placeholder="Search by tag">
+                <button type="submit" class="btn btn-primary mt-2">Search</button>
+            </form>
+        </div>
+    </div>
 </th:block>
 
 <th:block th:fragment="logout">
     <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
+        <button class="btn btn-primary" type="submit">Sign Out</button>
     </form>
 </th:block>
 

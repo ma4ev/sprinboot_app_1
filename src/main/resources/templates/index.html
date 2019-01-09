@@ -5,14 +5,14 @@
 </head>
 <body>
 <th:block th:include="common :: navbar"></th:block>
-<div>
-    <a href="/users">User list</a>
+<div class="container mt-2">
+    <div>
+        <th:block th:include="fragments :: messages_table"/>
+    </div>
+    <div class="mt-2">
+        <th:block th:include="fragments :: add_message"/>
+    </div>
 </div>
-<div>
-    <th:block th:include="fragments :: messages_table"/>
-</div>
-<div>
-    <th:block th:include="fragments :: add_message"/>
-</div>
+
 </body>
 </html>

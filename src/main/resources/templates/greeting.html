@@ -1,18 +1,14 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:include="common :: head">
     <title>Getting Started: Serving Web Content</title>
 </head>
 <body>
-<!--<th:block th:include="common :: navbar"></th:block>-->
+<th:block th:include="common :: navbar"></th:block>
 <div class="container mt-5">
     <h4>Hello, guest!</h4>
     <div>
         You are welcome!
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        This will only be displayed if authenticated user has role ///.
     </div>
 </div>
 

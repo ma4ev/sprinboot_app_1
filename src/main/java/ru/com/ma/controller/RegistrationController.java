@@ -19,8 +19,9 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registration(){
-        return "registration";
+    public String registration(Model model){
+        model.addAttribute("isRegistration", Boolean.TRUE);
+        return "login";
     }
 
     @PostMapping("/registration")
