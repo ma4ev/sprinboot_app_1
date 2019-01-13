@@ -10,7 +10,7 @@
             <div id="messages_table">
                     <div th:each="item : ${messages}" class="card my-3">
                         <div class="card-img-top">
-                            <span th:if="${item.filename} !=null"><img th:src="@{'/img/' + ${item.filename}}"></span>
+                            <span th:if="${item.filename} !=null"><img th:src="@{'/img/' + ${item.filename}}"/></span>
                         </div>
                         <div class="m-2">
                             <span th:text="${item.text}">></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
-                        <input type="file" name="file" id="customFile">
+                        <input type="file" name="file" id="customFile"/>
                         <label class="custom-file-label" for="customFile">Choose file</label>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
         <div class="form-group col-md-6">
             <form method="get" autocomplete="off" th:object="${filter}" th:action="@{/main}" class="form-inline">
                 <label for="term"></label>
-                <input type="text" th:field="*{term}" class="form-control" placeholder="Search by tag">
+                <input type="text" th:field="*{term}" class="form-control" placeholder="Search by tag"/>
                 <button type="submit" class="btn btn-primary mt-2">Search</button>
             </form>
         </div>
