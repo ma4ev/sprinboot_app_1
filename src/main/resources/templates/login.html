@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:include="common :: head">
-    <title>Login page</title>
+<head>
+    <div th:replace="common :: head"></div>
+    <title th:text="#{login.page.title}"></title>
 </head>
 <body>
 <th:block th:include="common :: navbar"></th:block>

@@ -1,5 +1,6 @@
 package ru.com.ma.service.impl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,7 +56,7 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
         try {
             mailSender.sendActivationCode(user1);
         } catch (ActivationCodeException e){
-
+            logger.warning(e.getMessage());
         }
 
         return user1;
@@ -83,5 +84,29 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
         repo.save(user);
 
         return true;
+    }
+
+    @Override
+    public void updateProfile(User user, String password, String email) {
+        String currentEmail = user.getEmail();
+
+        if(StringUtils.isNotBlank(currentEmail) && StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)){
+            Boolean isEmailChanged = !email.equals(currentEmail);
+
+            if(isEmailChanged){
+                user.setEmail(email);
+                user.setActivationCode(UUID.randomUUID().toString());
+                user.setPassword(password);
+                repo.save(user);
+
+                try {
+                    mailSender.sendActivationCode(user);
+                } catch (ActivationCodeException e){
+                    logger.warning(e.getMessage());
+                }
+            }
+        }
+
+
     }
 }
