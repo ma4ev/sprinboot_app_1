@@ -8,23 +8,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.com.ma.domain.Role;
 import ru.com.ma.domain.User;
+import ru.com.ma.exceptions.ActivationCodeException;
 import ru.com.ma.repositories.UserRepository;
+import ru.com.ma.service.MailSender;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class UserServiceImpl implements ru.com.ma.service.UserService{
 
-    private UserRepository repo;
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
+    private UserRepository repo;
     private PasswordEncoder passwordEncoder;
+    private MailSender mailSender;
 
     @Autowired
-    public UserServiceImpl(UserRepository repo, PasswordEncoder passwordEncoder){
-
+    public UserServiceImpl(UserRepository repo, PasswordEncoder passwordEncoder, MailSender mailSender){
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -43,8 +49,16 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
             user.setActive(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setRoles(Collections.singleton(Role.USER));
+            user.setActivationCode(UUID.randomUUID().toString());
         }
-        return repo.save(user);
+        User user1 = repo.save(user);
+        try {
+            mailSender.sendActivationCode(user1);
+        } catch (ActivationCodeException e){
+
+        }
+
+        return user1;
     }
 
     public List<User> findAll(){
@@ -56,5 +70,18 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
         repo.delete(user);
     }
 
+    @Override
+    public boolean activateUser(String code) {
 
+        User user = repo.findByActivationCode(code);
+
+        if (user == null){
+            return false;
+        }
+
+        user.setActivationCode(null);
+        repo.save(user);
+
+        return true;
+    }
 }

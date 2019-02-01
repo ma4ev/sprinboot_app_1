@@ -18,6 +18,8 @@ CREATE TABLE usr (
   active   BOOLEAN,
   password VARCHAR(255) NOT NULL,
   username VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  activation_code VARCHAR(36),
   PRIMARY KEY (id)
 );
 ALTER TABLE IF EXISTS message

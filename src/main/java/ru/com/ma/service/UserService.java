@@ -12,4 +12,5 @@ public interface UserService extends UserDetailsService{
     List<User> findAll();
     void delete(User user);
 
+    boolean activateUser(String code);
 }
