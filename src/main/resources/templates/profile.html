@@ -10,7 +10,7 @@
     <h5 th:text="${user.username}"></h5>
 </div>
 <div>
-    <form method="post" th:object="${user}" autocomplete="off">
+    <form method="post" th:object="${user}" autocomplete="off" th:action="@{/users/profile}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Password: </label>
             <div class="col-sm-6">

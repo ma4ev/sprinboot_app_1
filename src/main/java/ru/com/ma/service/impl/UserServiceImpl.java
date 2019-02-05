@@ -89,11 +89,13 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
     @Override
     public void updateProfile(User user, String password, String email) {
         String currentEmail = user.getEmail();
+        String currentPassword = user.getPassword();
 
         if(StringUtils.isNotBlank(currentEmail) && StringUtils.isNotBlank(password) && StringUtils.isNotBlank(email)){
             Boolean isEmailChanged = !email.equals(currentEmail);
+            Boolean isPasswordChanged = !password.equals(currentPassword);
 
-            if(isEmailChanged){
+            if(isEmailChanged || isPasswordChanged){
                 user.setEmail(email);
                 user.setActivationCode(UUID.randomUUID().toString());
                 user.setPassword(password);
