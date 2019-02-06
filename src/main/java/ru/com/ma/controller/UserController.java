@@ -58,14 +58,14 @@ public class UserController {
     }
 
     @GetMapping("profile")
-    public String profile(Model model, @AuthenticationPrincipal User user){
+    public String profile(Model model, @AuthenticationPrincipal(expression = "user") User user){
         model.addAttribute("user", user);
         return "profile";
     }
 
     @PostMapping("profile")
     public String updateProfile(
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal(expression = "user") User user,
             @RequestParam String password,
             @RequestParam String email){
             userService.updateProfile(user, password, email);

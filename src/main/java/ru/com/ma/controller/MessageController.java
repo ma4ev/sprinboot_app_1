@@ -60,7 +60,7 @@ public class MessageController {
     @PostMapping("/main")
     public String addMessage(
             @ModelAttribute Message message,
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal(expression = "user") User user,
             @RequestParam("file") MultipartFile file
             ) throws IOException {
         if(file != null && !file.isEmpty()){

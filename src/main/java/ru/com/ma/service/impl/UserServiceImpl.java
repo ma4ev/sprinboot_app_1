@@ -2,8 +2,6 @@ package ru.com.ma.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,11 +30,6 @@ public class UserServiceImpl implements ru.com.ma.service.UserService{
         this.repo = repo;
         this.passwordEncoder = passwordEncoder;
         this.mailSender = mailSender;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repo.findByUsername(username);
     }
 
     @Override
