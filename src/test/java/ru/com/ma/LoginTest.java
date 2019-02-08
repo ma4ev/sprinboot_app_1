@@ -52,7 +52,7 @@ public class LoginTest {
     @Sql(value = {"/create-user-before.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = {"/create-user-after.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     public void correctLoginTest() throws Exception {
-        this.mockMvc.perform(formLogin().user("qqq").password("qqq"))
+        this.mockMvc.perform(formLogin().user("simpleUser").password("qqq"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
